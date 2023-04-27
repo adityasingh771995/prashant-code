@@ -1,0 +1,32 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$categoryRepository = $objectManager->create('\Magento\Catalog\Model\CategoryRepository');
+$storeManager = $objectManager->create('\Magento\Store\Model\StoreManagerInterface');
+$categoryId=2;
+$category = $categoryRepository->get($categoryId);
+$subCategories = $category->getChildrenCategories();
+$baseUrl = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
+?>
+<div class="container mt-4 category_home_block" style="width:60%">
+    <div class="row">
+        <?php
+        foreach ($subCategories as $cat) {
+            if($cat->getId() == 1 || $cat->getId() == 2){  }else{ ?>
+            <div class="col-sm-6 " style="margin-bottom:2.4%">
+            <div class="div-sm-6">
+                <span style="color:#444141; font-weight:600;"><?= $cat->getName() ?></span>
+            </div>
+            <button class="btn btn-success learn-more-button" style="background-color: #9be3be; border: white;"><a style="color:black;" href="<?= $cat->getUrl() ?>">LEARN MORE</a></button>
+            <img src='https://magento-981019-3437920.cloudwaysapps.com/media/porto/placeholder/400x400.png' style="border:1px solid grey;" />
+
+            </div>
+        <!-- <div class="col-sm-6 custom_col-sm-6" style="background-image: url(https://magento-981019-3437920.cloudwaysapps.com/media/porto/placeholder/400x400.png); background-repeat: round;">
+            <div class="div-sm-6">
+                <span style="color:#444141; font-weight:600;"><?= $cat->getName() ?></span>
+            </div>
+            <button class="btn btn-success learn-more-button" style="background-color: #17b68d96; border: white;"><a style="color:black;" href="<?= $cat->getUrl() ?>">LEARN MORE</a></button>
+        </div> -->
+        <?php } } ?>
+    </div>
+</div>
+<!-- style="background-image: url(</?= rtrim($baseUrl,'/').$cat->getImageUrl() ?>);" -->
